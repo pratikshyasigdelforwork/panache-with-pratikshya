@@ -1,0 +1,48 @@
+Last login: Thu Jun  4 14:11:37 on ttys000
+/Users/macbook/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
+macbook@sandy ~ % open -e src/components/Navbar.tsx
+
+The file /Users/macbook/src/components/Navbar.tsx does not exist.
+macbook@sandy ~ % open asos-kathmandu
+macbook@sandy ~ % cd ~/asos-kathmandu
+
+macbook@sandy asos-kathmandu % rm -rf src/components/Navbar.tsx
+touch src/components/Navbar.tsx
+
+macbook@sandy asos-kathmandu % nano src/components/Navbar.tsx
+
+
+
+
+
+
+
+
+
+
+
+
+  UW PICO 5.09            File: src/components/Navbar.tsx             Modified  
+
+            {/* Minimal dynamic item indicator circle */}
+            <span className="absolute top-1 right-1 flex h-4 w-4
+items-center justify-center rounded-full bg-neutral-950 text-[9px]
+font-medium text-white">
+              0
+            </span>
+          </Link>
+        </div>
+              
+      </div>
+    </header>
+  );        
+}
+
+               
+            
+          
+        
+              
+
+^G Get Help  ^O WriteOut  ^R Read File ^Y Prev Pg   ^K Cut Text  ^C Cur Pos   
+^X Exit      ^J Justify   ^W Where is  ^V Next Pg   ^U UnCut Text^T To Spell  

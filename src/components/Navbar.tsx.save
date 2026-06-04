@@ -1,0 +1,7 @@
+<Link href="/men" className="hover:text-blue-500 transition-colors">
+  Men
+</Link>
+<Link href="/women" className="hover:text-blue-500 transition-colors">
+  Women
+</Link>
+
