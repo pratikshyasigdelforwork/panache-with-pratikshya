@@ -1,7 +1,8 @@
 "use client";
 
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { produce } from "immer"; // For immutable updates
 
 export type CartItem = {
   id: string;
@@ -20,49 +21,67 @@ type CartState = {
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
+  // Add a flag to indicate if the store has been hydrated
+  _hasHydrated: boolean;
+  setHasHydrated: (state: boolean) => void;
 };
 
 export const useCartStore = create<CartState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       items: [],
+      _hasHydrated: false,
+      setHasHydrated: (state) => {
+        set({
+          _hasHydrated: state,
+        });
+      },
       addItem: (item, quantity = 1) =>
-        set((state) => {
-          const current = state.items.find((cartItem) => cartItem.id === item.id);
-          const nextQuantity = current
-            ? Math.min(current.quantity + quantity, item.stock)
-            : Math.min(quantity, item.stock);
+        set(
+          produce((state: CartState) => {
+            const existingItemIndex = state.items.findIndex(
+              (i) => i.id === item.id,
+            );
 
-          if (current) {
-            return {
-              items: state.items.map((cartItem) =>
-                cartItem.id === item.id
-                  ? { ...cartItem, ...item, quantity: nextQuantity }
-                  : cartItem,
-              ),
-            };
-          }
-
-          return {
-            items: [...state.items, { ...item, quantity: nextQuantity }],
-          };
-        }),
+            if (existingItemIndex > -1) {
+              const existingItem = state.items[existingItemIndex];
+              const newQuantity = existingItem.quantity + quantity;
+              state.items[existingItemIndex].quantity = Math.min(
+                newQuantity,
+                item.stock,
+              );
+            } else {
+              state.items.push({ ...item, quantity: Math.min(quantity, item.stock) });
+            }
+          }),
+        ),
       removeItem: (id) =>
-        set((state) => ({
-          items: state.items.filter((item) => item.id !== id),
-        })),
+        set(
+          produce((state: CartState) => {
+            state.items = state.items.filter((item) => item.id !== id);
+          }),
+        ),
       updateQuantity: (id, quantity) =>
-        set((state) => ({
-          items: state.items.map((item) =>
-            item.id === id
-              ? { ...item, quantity: Math.max(1, Math.min(quantity, item.stock)) }
-              : item,
-          ),
-        })),
+        set(
+          produce((state: CartState) => {
+            const itemIndex = state.items.findIndex((item) => item.id === id);
+            if (itemIndex > -1) {
+              const product = get().items[itemIndex]; // Get current product to check stock
+              state.items[itemIndex].quantity = Math.max(
+                1,
+                Math.min(quantity, product.stock),
+              );
+            }
+          }),
+        ),
       clearCart: () => set({ items: [] }),
     }),
     {
-      name: "asos-kathmandu-cart",
+      name: "cart-storage", // name of the item in localStorage
+      storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     },
   ),
 );
