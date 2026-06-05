@@ -1,101 +1,67 @@
-export default function Home() {
+import Image from "next/image";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import ProductCard from "@/components/ProductCard";
+import { prisma } from "@/lib/prisma";
+
+export default async function Home() {
+  const products = await prisma.product.findMany({
+    where: { active: true },
+    orderBy: { createdAt: "desc" },
+    take: 4,
+  });
+
   return (
     <main className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="flex items-center justify-between px-8 py-5 border-b">
-        <h1 className="text-3xl font-bold">
-          ASOS Kathmandu
-        </h1>
+      <Navbar />
 
-        <div className="flex gap-6">
-          <a href="/shop">Shop</a>
-<a href="/cart">Cart</a>
-<a href="/account">Account</a>
-<a href="/admin">Admin</a>
-        </div>
-
-        <div className="flex gap-3">
-          <button className="border px-4 py-2 rounded">
-            Sign In
-          </button>
-
-          <button className="bg-black text-white px-4 py-2 rounded">
-            Cart
-          </button>
-        </div>
-      </nav>
-
-      {/* Hero */}
-      <section className="h-[600px] flex items-center justify-center bg-black text-white">
-        <div className="text-center">
-          <h2 className="text-6xl font-bold mb-4">
-            NEW SEASON ARRIVALS
-          </h2>
-
-          <p className="text-xl mb-8">
-            Fashion from Kathmandu to the world
+      <section className="relative min-h-[560px] overflow-hidden bg-neutral-950 text-white">
+        <Image
+          src="/images/IMG_2683.jpeg"
+          alt="ASOS Kathmandu new season collection"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-55"
+        />
+        <div className="relative mx-auto flex min-h-[560px] max-w-7xl flex-col justify-end px-4 pb-16 pt-24 sm:px-6 lg:px-8">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/75">
+            New season arrivals
           </p>
-
-          <button className="bg-white text-black px-8 py-3 rounded">
-            Shop Now
-          </button>
+          <h1 className="mt-4 max-w-3xl text-5xl font-semibold tracking-normal sm:text-6xl">
+            Fashion from Kathmandu to the world
+          </h1>
+          <p className="mt-5 max-w-xl text-base leading-7 text-white/80">
+            Curated jackets, shoes, watches, and bags with secure Stripe checkout
+            and live inventory from our catalog.
+          </p>
+          <Link
+            href="/shop"
+            className="mt-8 inline-flex h-12 w-fit items-center rounded-md bg-white px-6 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+          >
+            Shop collection
+          </Link>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="max-w-7xl mx-auto py-16 px-8">
-        <h2 className="text-4xl font-bold mb-10">
-          Featured Products
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="border rounded-lg p-4">
-            <h3 className="font-semibold">
-              Premium Jacket
-            </h3>
-
-            <p className="mt-2">$99</p>
-
-            <button className="mt-4 w-full bg-black text-white py-2 rounded">
-              Add To Cart
-            </button>
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mb-8 flex items-end justify-between gap-6">
+          <div>
+            <p className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
+              Featured
+            </p>
+            <h2 className="mt-2 text-3xl font-semibold text-neutral-950">
+              Ready to ship
+            </h2>
           </div>
-
-          <div className="border rounded-lg p-4">
-            <h3 className="font-semibold">
-              Designer Shoes
-            </h3>
-
-            <p className="mt-2">$120</p>
-
-            <button className="mt-4 w-full bg-black text-white py-2 rounded">
-              Add To Cart
-            </button>
-          </div>
-
-          <div className="border rounded-lg p-4">
-            <h3 className="font-semibold">
-              Luxury Watch
-            </h3>
-
-            <p className="mt-2">$250</p>
-
-            <button className="mt-4 w-full bg-black text-white py-2 rounded">
-              Add To Cart
-            </button>
-          </div>
-
-          <div className="border rounded-lg p-4">
-            <h3 className="font-semibold">
-              Travel Bag
-            </h3>
-
-            <p className="mt-2">$150</p>
-
-            <button className="mt-4 w-full bg-black text-white py-2 rounded">
-              Add To Cart
-            </button>
-          </div>
+          <Link href="/shop" className="text-sm font-medium hover:underline">
+            View all
+          </Link>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </section>
     </main>

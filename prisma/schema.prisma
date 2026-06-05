@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      String   @default("customer")
+  createdAt DateTime @default(now())
+  orders    Order[]
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  slug        String      @unique @default(cuid())
+  name        String
+  category    String      @default("uncategorized")
+  description String?
+  price       Float
+  priceCents  Int         @default(0)
+  currency    String      @default("usd")
+  image       String
+  brand       String?
+  active      Boolean     @default(true)
+  stock       Int         @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id                      String      @id @default(cuid())
+  total                   Float
+  subtotalCents           Int         @default(0)
+  shippingCents           Int         @default(0)
+  taxCents                Int         @default(0)
+  totalCents              Int         @default(0)
+  currency                String      @default("usd")
+  status                  String      @default("pending")
+  email                   String?
+  customerName            String?
+  stripeCheckoutSessionId String?     @unique
+  stripePaymentIntentId   String?
+  userId                  String?
+  user                    User?       @relation(fields: [userId], references: [id])
+  items                   OrderItem[]
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+}
+
+model OrderItem {
+  id           String  @id @default(cuid())
+  orderId      String
+  productId    String
+  quantity     Int
+  price        Float
+  priceCents   Int     @default(0)
+  productName  String?
+  productImage String?
+  order        Order   @relation(fields: [orderId], references: [id])
+  product      Product @relation(fields: [productId], references: [id])
+}
