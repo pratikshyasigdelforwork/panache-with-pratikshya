@@ -52,6 +52,7 @@ export default async function ShopPage({
               name="q"
               defaultValue={query}
               placeholder="Search catalog"
+              aria-label="Search products"
               className="h-11 min-w-0 flex-1 rounded-md border border-neutral-300 px-3 text-sm outline-none focus:border-neutral-950"
             />
             <button
