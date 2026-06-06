@@ -19,7 +19,7 @@ model User {
 
 model Product {
   id          String      @id @default(cuid())
-  slug        String      @unique @default(cuid())
+  slug        String?     @unique @default(cuid())
   name        String
   category    String      @default("uncategorized")
   description String?
@@ -31,7 +31,7 @@ model Product {
   active      Boolean     @default(true)
   stock       Int         @default(0)
   createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  updatedAt   DateTime?   @updatedAt
   orderItems  OrderItem[]
 }
 

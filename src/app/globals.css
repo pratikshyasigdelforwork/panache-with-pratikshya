@@ -13,7 +13,9 @@
 body {
   margin: 0;
   background: #ffffff;
-  color: #171717;
+  color: #0a0a0a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 button,
@@ -21,4 +23,11 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+/* Typography refinements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }

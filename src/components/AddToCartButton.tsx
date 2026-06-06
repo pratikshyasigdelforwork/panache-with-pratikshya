@@ -6,7 +6,7 @@ import { useCartStore } from "@/lib/cart-store";
 type AddToCartProduct = {
   id: string;
   name: string;
-  slug: string;
+  slug: string | null;
   image: string;
   priceCents: number;
   currency: string;
@@ -25,7 +25,7 @@ export default function AddToCartButton({
     <button
       type="button"
       disabled={disabled}
-      onClick={() => addItem(product)}
+      onClick={() => addItem({ ...product, slug: product.slug ?? "" })}
       className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-neutral-950 px-4 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300"
     >
       <ShoppingBag className="h-4 w-4" />

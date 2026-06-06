@@ -6,7 +6,6 @@ import { prisma } from "@/lib/prisma";
 
 export default async function Home() {
   const products = await prisma.product.findMany({
-    where: { active: true },
     orderBy: { createdAt: "desc" },
     take: 4,
   });
@@ -15,48 +14,42 @@ export default async function Home() {
     <main className="min-h-screen bg-white">
       <Navbar />
 
-      <section className="relative min-h-[560px] overflow-hidden bg-neutral-950 text-white">
-        <Image
-          src="/images/IMG_2683.jpeg"
-          alt="ASOS Kathmandu new season collection"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-55"
-        />
-        <div className="relative mx-auto flex min-h-[560px] max-w-7xl flex-col justify-end px-4 pb-16 pt-24 sm:px-6 lg:px-8">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/75">
-            New season arrivals
-          </p>
-          <h1 className="mt-4 max-w-3xl text-5xl font-semibold tracking-normal sm:text-6xl">
-            Fashion from Kathmandu to the world
-          </h1>
-          <p className="mt-5 max-w-xl text-base leading-7 text-white/80">
-            Curated jackets, shoes, watches, and bags with secure Stripe checkout
-            and live inventory from our catalog.
-          </p>
-          <Link
-            href="/shop"
-            className="mt-8 inline-flex h-12 w-fit items-center rounded-md bg-white px-6 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
-          >
-            Shop collection
-          </Link>
-        </div>
-      </section>
+          <section className="relative h-[80vh] w-full overflow-hidden">
+            <Image
+              src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1600&q=80"
+              alt="Panache with Pratikshya"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-4 pb-24 sm:px-6 lg:px-8">
+              <div className="max-w-2xl text-white">
+                <h1 className="text-6xl font-bold uppercase leading-none tracking-tighter md:text-8xl">
+                  Panache.
+                </h1>
+                <p className="mt-6 text-xl font-light tracking-wide text-white/90">
+                  Curated designer pieces by Pratikshya. Timeless elegance.
+                </p>
+                <div className="mt-10 flex gap-4">
+                  <Link
+                    href="/shop"
+                    className="inline-flex h-14 items-center bg-white px-10 text-sm font-bold uppercase tracking-widest text-neutral-950 transition hover:bg-neutral-200"
+                  >
+                    Shop Now
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
 
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mb-8 flex items-end justify-between gap-6">
-          <div>
-            <p className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
-              Featured
-            </p>
-            <h2 className="mt-2 text-3xl font-semibold text-neutral-950">
-              Ready to ship
-            </h2>
-          </div>
-          <Link href="/shop" className="text-sm font-medium hover:underline">
-            View all
-          </Link>
+        <div className="mb-12 flex flex-col gap-4 border-b border-neutral-200 pb-8">
+          <h2 className="text-3xl font-bold uppercase tracking-tight text-neutral-950">
+            Ready to ship
+          </h2>
+          <p className="max-w-md text-neutral-600">Explore our latest designer arrivals, curated for the modern wardrobe.</p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((product) => (

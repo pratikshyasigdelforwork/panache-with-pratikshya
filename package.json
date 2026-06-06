@@ -1,5 +1,5 @@
 {
-  "name": "asos-kathmandu",
+  "name": "panache-with-pratikshya",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@google/genai": "^2.8.0",
+    "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^6.19.3",
     "@react-google-maps/api": "^2.20.8",
+    "immer": "^11.1.8",
     "lucide-react": "^1.17.0",
     "next": "^15.1.0",
     "next-auth": "^5.0.0-beta.25",

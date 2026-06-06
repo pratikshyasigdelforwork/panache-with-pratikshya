@@ -16,9 +16,9 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="text-lg font-black uppercase tracking-[0.18em] text-neutral-950"
+          className="text-2xl font-serif font-medium uppercase tracking-[0.05em] text-neutral-950"
         >
-          ASOS <span className="text-xs font-medium text-neutral-500">KTM</span>
+          ASOS
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -26,7 +26,7 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-xs font-medium uppercase tracking-[0.14em] text-neutral-600 transition hover:text-neutral-950"
+              className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-500 transition hover:text-neutral-950"
             >
               {link.name}
             </Link>
