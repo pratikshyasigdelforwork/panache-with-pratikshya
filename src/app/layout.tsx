@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import OrderChat from "@/components/OrderChat";
 import CartDrawer from "@/components/CartDrawer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const serif = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-serif" });
 const sans = Inter({ subsets: ["latin"], weight: ["300", "400", "600"], variable: "--font-sans" });
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CartDrawer />
           <OrderChat />
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
