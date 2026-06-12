@@ -1,5 +1,77 @@
 @import "tailwindcss";
 
+/* ── Scroll Animations ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes goldPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.6; }
+}
+
+.animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+.animate-fade-in    { animation: fadeIn 0.6s ease-out forwards; }
+.animate-scale-in   { animation: scaleIn 0.5s ease-out forwards; }
+
+[data-animate] {
+  opacity: 0;
+}
+[data-animate].in-view {
+  opacity: 1;
+}
+[data-animate="fadeInUp"].in-view {
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+[data-animate="fadeIn"].in-view {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+[data-animate="scaleIn"].in-view {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+/* Stagger children */
+[data-animate-stagger] > * {
+  opacity: 0;
+}
+[data-animate-stagger].in-view > *:nth-child(1) { animation: fadeInUp 0.6s ease-out 0.05s forwards; }
+[data-animate-stagger].in-view > *:nth-child(2) { animation: fadeInUp 0.6s ease-out 0.12s forwards; }
+[data-animate-stagger].in-view > *:nth-child(3) { animation: fadeInUp 0.6s ease-out 0.19s forwards; }
+[data-animate-stagger].in-view > *:nth-child(4) { animation: fadeInUp 0.6s ease-out 0.26s forwards; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--gold) / 0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--gold) / 0.5); }
+
+/* Underline hover effect */
+.underline-link {
+  position: relative;
+}
+.underline-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: hsl(var(--gold));
+  transition: width 0.3s ease, left 0.3s ease;
+}
+.underline-link:hover::after {
+  width: 100%;
+  left: 0;
+}
+
 @layer base {
   :root {
     --background: 60 30% 98%; /* Ivory light */

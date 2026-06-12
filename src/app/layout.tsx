@@ -12,7 +12,20 @@ const sans = Inter({ subsets: ["latin"], weight: ["300", "400", "600"], variable
 
 export const metadata: Metadata = {
   title: "PRATIKSHYA NEPAL | Luxury Heritage Fashion",
-  description: "Curated Nepalese designer fashion and heritage atelier.",
+  description: "Curated Nepalese designer fashion and heritage atelier. Handcrafted in the Himalayas since 1952.",
+  openGraph: {
+    title: "PRATIKSHYA NEPAL | Luxury Heritage Fashion",
+    description: "Curated Nepalese designer fashion and heritage atelier. Handcrafted in the Himalayas since 1952.",
+    type: "website",
+    locale: "en_US",
+    siteName: "PRATIKSHYA NEPAL",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PRATIKSHYA NEPAL | Luxury Heritage Fashion",
+    description: "Curated Nepalese designer fashion and heritage atelier.",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -23,7 +36,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
         >
           <div className="flex flex-col min-h-screen">
             <div className="flex-1">

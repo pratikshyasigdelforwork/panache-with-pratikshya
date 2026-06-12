@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Search, User, ShoppingBag, Heart, Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Search, ShoppingBag, Heart, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import CartCount from "@/components/CartCount";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -39,6 +40,7 @@ const menuPages = [
 ];
 
 export default function Header() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const openCart = useCartStore((state) => state.openCart);
@@ -56,110 +58,152 @@ export default function Header() {
     else document.body.style.overflow = "unset";
   }, [isMobileMenuOpen]);
 
+  const isActive = (href: string) => {
+    const base = href.split("?")[0];
+    return pathname === base;
+  };
+
   return (
-    <header 
-      className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300 border-b",
-        isScrolled 
-          ? "bg-white/80 backdrop-blur dark:bg-neutral-950/80 border-neutral-200 dark:border-neutral-800 h-16" 
-          : "bg-transparent border-transparent h-20"
-      )}
-    >
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Mobile Menu Toggle */}
-        <button 
-          className="md:hidden p-2 text-neutral-700 dark:text-neutral-300 hover:text-gold-dark dark:hover:text-gold-light transition-colors"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Menu"
-        >
-          {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex flex-col items-center text-center"
-        >
-          <span className="text-xl font-serif font-bold uppercase tracking-[0.3em] text-neutral-950 dark:text-neutral-50 md:text-2xl">
-            PRATIKSHYA
-          </span>
-          <span className="text-[8px] font-sans uppercase tracking-[0.5em] text-gold-dark dark:text-gold-light">
-            NEPAL
-          </span>
-        </Link>
-
-        {/* Desktop Nav (hidden on mobile) */}
-        <nav className="hidden items-center gap-8 md:flex">
-          {navigationLinks.map((link) => (
-            <div key={link.name} className="group relative py-4">
-              <Link
-                href={link.href}
-                className="text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-600 transition hover:text-gold-dark dark:text-neutral-400 dark:hover:text-gold-light"
-              >
-                {link.name}
-              </Link>
-              {link.submenu && (
-                <div className="absolute left-0 top-full hidden w-48 bg-white p-4 shadow-xl group-hover:block dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800">
-                  <div className="flex flex-col gap-3">
-                    {link.submenu.map((sub) => (
-                      <Link 
-                        key={sub.name} 
-                        href={sub.href}
-                        className="text-[9px] uppercase tracking-widest text-neutral-500 hover:text-gold-dark dark:hover:text-gold-light"
-                      >
-                        {sub.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </nav>
-
-        {/* Actions - only Cart + Theme visible, rest in menu */}
-        <div className="flex items-center gap-1 text-neutral-700 dark:text-neutral-300">
-          <ThemeToggle />
-          <button
-            onClick={openCart}
-            className="relative grid h-10 w-10 place-items-center transition hover:text-gold-dark dark:hover:text-gold-light"
-            aria-label="Shopping bag"
-          >
-            <ShoppingBag className="h-5 w-5" />
-            <CartCount />
-          </button>
-        </div>
+    <>
+      {/* Announcement bar */}
+      <div className="relative z-50 flex h-8 items-center justify-center bg-neutral-950 text-[8px] uppercase tracking-[0.3em] text-white dark:bg-gold-dark dark:text-neutral-950">
+        <p>Free shipping on orders over $200 &nbsp;·&nbsp; Heritage Atelier since 1952</p>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-x-0 top-full h-screen bg-white p-6 dark:bg-neutral-950 md:hidden border-t dark:border-neutral-800 overflow-y-auto z-50">
-          <nav className="flex flex-col gap-6">
-            {navigationLinks.map((link) => (
-              <div key={link.name}>
-                <Link
-                  href={link.href}
-                  className="text-sm font-medium uppercase tracking-widest text-neutral-900 dark:text-neutral-50"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-                {link.submenu && (
-                  <div className="mt-4 flex flex-col gap-3 pl-4">
-                    {link.submenu.map((sub) => (
-                      <Link 
-                        key={sub.name} 
-                        href={sub.href}
-                        className="text-xs text-neutral-500"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {sub.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+      <header 
+        className={cn(
+          "sticky top-0 z-50 w-full transition-all duration-300 border-b",
+          isScrolled 
+            ? "bg-white/90 backdrop-blur-lg dark:bg-neutral-950/90 border-neutral-200 dark:border-neutral-800 h-16" 
+            : "bg-transparent border-transparent h-20"
+        )}
+      >
+        <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden p-2 text-neutral-700 dark:text-neutral-300 hover:text-gold-dark dark:hover:text-gold-light transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Menu"
+          >
+            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex flex-col items-center text-center"
+          >
+            <span className="text-xl font-serif font-bold uppercase tracking-[0.3em] text-neutral-950 dark:text-neutral-50 md:text-2xl">
+              PRATIKSHYA
+            </span>
+            <span className="text-[8px] font-sans uppercase tracking-[0.5em] text-gold-dark dark:text-gold-light">
+              NEPAL
+            </span>
+          </Link>
+
+          {/* Desktop Nav (hidden on mobile) */}
+          <nav className="hidden items-center gap-8 md:flex">
+            {navigationLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <div key={link.name} className="group relative py-4">
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "relative text-[10px] font-medium uppercase tracking-[0.2em] transition-colors",
+                      active
+                        ? "text-gold-dark dark:text-gold-light"
+                        : "text-neutral-600 hover:text-gold-dark dark:text-neutral-400 dark:hover:text-gold-light"
+                    )}
+                  >
+                    {link.name}
+                    {active && (
+                      <span className="absolute -bottom-1 left-1/2 h-[2px] w-4 -translate-x-1/2 bg-gold-dark dark:bg-gold-light" />
+                    )}
+                  </Link>
+                  {link.submenu && (
+                    <div className="absolute left-0 top-full w-48 bg-white p-4 shadow-xl opacity-0 invisible transition-all duration-200 translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800">
+                      <div className="flex flex-col gap-3">
+                        {link.submenu.map((sub) => (
+                          <Link 
+                            key={sub.name} 
+                            href={sub.href}
+                            className="relative text-[9px] uppercase tracking-widest text-neutral-500 hover:text-gold-dark dark:hover:text-gold-light underline-link"
+                          >
+                            {sub.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
+
+          {/* Actions - Search, Heart, Cart, Theme */}
+          <div className="flex items-center gap-1 text-neutral-700 dark:text-neutral-300">
+            <Link
+              href="/shop"
+              className="hidden md:grid h-10 w-10 place-items-center transition hover:text-gold-dark dark:hover:text-gold-light"
+              aria-label="Search"
+            >
+              <Search className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/wishlist"
+              className="hidden md:grid h-10 w-10 place-items-center transition hover:text-gold-dark dark:hover:text-gold-light"
+              aria-label="Wishlist"
+            >
+              <Heart className="h-4 w-4" />
+            </Link>
+            <ThemeToggle />
+            <button
+              onClick={openCart}
+              className="relative grid h-10 w-10 place-items-center transition hover:text-gold-dark dark:hover:text-gold-light"
+              aria-label="Shopping bag"
+            >
+              <ShoppingBag className="h-5 w-5" />
+              <CartCount />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-x-0 top-full h-screen bg-white p-6 dark:bg-neutral-950 md:hidden border-t dark:border-neutral-800 overflow-y-auto z-50 animate-fade-in">
+            <nav className="flex flex-col gap-6">
+            {navigationLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <div key={link.name}>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "text-sm font-medium uppercase tracking-widest",
+                      active ? "text-gold-dark dark:text-gold-light" : "text-neutral-900 dark:text-neutral-50"
+                    )}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                  {link.submenu && (
+                    <div className="mt-4 flex flex-col gap-3 pl-4">
+                      {link.submenu.map((sub) => (
+                        <Link 
+                          key={sub.name} 
+                          href={sub.href}
+                          className="text-xs text-neutral-500"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {sub.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
             <hr className="border-neutral-200 dark:border-neutral-800" />
             <span className="text-[10px] uppercase tracking-[0.3em] text-gold-dark dark:text-gold-light">More</span>
             {menuPages.map((page) => (
@@ -175,6 +219,7 @@ export default function Header() {
           </nav>
         </div>
       )}
-    </header>
+      </header>
+    </>
   );
 }
