@@ -46,3 +46,4 @@ next-env.d.ts
 
 # device tracking logs
 /data/
+dev.log
