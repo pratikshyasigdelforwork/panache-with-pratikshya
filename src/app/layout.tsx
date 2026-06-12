@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import OrderChat from "@/components/OrderChat";
 import CartDrawer from "@/components/CartDrawer";
+import DeviceTracker from "@/components/DeviceTracker";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const serif = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-serif" });
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
-      <body className="font-sans antialiased bg-neutral-50 text-neutral-900 selection:bg-neutral-900 selection:text-white dark:bg-neutral-950 dark:text-neutral-50 dark:selection:bg-neutral-50 dark:selection:text-neutral-950">
+      <body className="font-sans antialiased bg-neutral-50 text-neutral-900 selection:bg-neutral-900 selection:text-white dark:bg-neutral-950 dark:text-neutral-50 dark:selection:bg-neutral-50 dark:selection:text-neutral-950 transition-colors duration-500">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
           <CartDrawer />
           <OrderChat />
+          <DeviceTracker />
         </ThemeProvider>
       </body>
     </html>

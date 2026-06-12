@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const categories = [
-  { name: "Pashmina Silks", image: "https://images.unsplash.com/photo-1590736704728-f4730bb3c3af?w=800&q=80", href: "/shop?category=pashmina" },
+  { name: "Pashmina Silks", image: "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?w=800&q=80", href: "/shop?category=pashmina" },
   { name: "Dhaka Weaves", image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&q=80", href: "/shop?category=dhaka" },
-  { name: "Muga Gold", image: "https://images.unsplash.com/photo-1445205170230-053b830c6050?w=800&q=80", href: "/shop?category=muga" },
-  { name: "Mithila Art", image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&q=80", href: "/shop?category=mithila" },
+  { name: "Muga Gold", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80", href: "/shop?category=muga" },
+  { name: "Mithila Art", image: "https://images.unsplash.com/photo-1575995872537-3793d29d972c?w=800&q=80", href: "/shop?category=mithila" },
 ];
 
 export default function CategoryGrid() {

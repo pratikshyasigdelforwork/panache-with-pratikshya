@@ -43,3 +43,6 @@ next-env.d.ts
 /src/generated/prisma
 .aider*
 .env*.local
+
+# device tracking logs
+/data/

@@ -66,8 +66,13 @@
 }
 
 @layer base {
-  * {
+  *, *::before, *::after {
     @apply border-neutral-200 dark:border-neutral-800;
+  }
+  button, a, input, select, textarea, .theme-transition {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-duration: 300ms;
+    transition-timing-function: ease-out;
   }
   body {
     @apply bg-neutral-50 text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-50;
