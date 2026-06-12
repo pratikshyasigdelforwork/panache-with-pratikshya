@@ -15,7 +15,7 @@ export default function CartCount() {
 
   return (
     <span
-      className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-neutral-950 text-[9px] font-medium text-white"
+      className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-neutral-950 text-[9px] font-medium text-white dark:bg-neutral-50 dark:text-neutral-950"
     >
       {count}
     </span>

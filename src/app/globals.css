@@ -1,21 +1,133 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  color-scheme: light;
+@layer base {
+  :root {
+    --background: 60 30% 98%; /* Ivory light */
+    --foreground: 0 0% 4%;    /* Ebony dark */
+    
+    --ebony: 0 0% 4%;
+    --ebony-2: 0 0% 8%;
+    --ebony-3: 0 0% 12%;
+    
+    --ivory: 60 30% 97%;
+    --ivory-dark: 60 20% 90%;
+    --ivory-warm: 40 30% 95%;
+    
+    --gold: 40 60% 58%;      /* #D4A853 */
+    --gold-light: 40 60% 70%;
+    --gold-dark: 40 60% 45%;
+    --gold-pale: 40 30% 85%;
+    
+    --saffron: 30 100% 60%;  /* #FF9933 */
+    --vermillion: 5 75% 55%; /* #E34234 */
+    
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
+    --primary: 40 60% 58%;
+    --primary-foreground: 60 30% 98%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 4%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 40 60% 58%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 40 60% 58%;
+    --radius: 0rem; /* Luxury sharp corners */
+  }
+
+  .dark {
+    --background: 0 0% 4%;    /* Ebony */
+    --foreground: 60 30% 98%; /* Ivory */
+    
+    --card: 0 0% 8%;
+    --card-foreground: 60 30% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 60 30% 98%;
+    --primary: 40 60% 58%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 60 30% 98%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 40 60% 58%;
+    --accent-foreground: 60 30% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 30% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 40 60% 58%;
+  }
 }
 
-* {
-  box-sizing: border-box;
+@layer base {
+  * {
+    @apply border-neutral-200 dark:border-neutral-800;
+  }
+  body {
+    @apply bg-neutral-50 text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-50;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif uppercase tracking-tight;
+    color: hsl(var(--foreground));
+  }
+
+  .luxury-border {
+    @apply border;
+    border-color: hsl(var(--gold));
+  }
 }
 
-body {
-  margin: 0;
-  background: #ffffff;
-  color: #0a0a0a;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
+/* Luxury Utilities */
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md dark:bg-black/70;
+  }
+  
+  .glass-gold {
+    @apply bg-white/70 backdrop-blur-md dark:bg-black/70 border border-[hsl(var(--gold))]/30;
+  }
+
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+  
+  .bg-gold {
+    background-color: hsl(var(--gold));
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(212, 168, 83, 0.1) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, hsl(var(--gold-dark)) 0%, hsl(var(--gold)) 50%, hsl(var(--gold-light)) 100%);
+  }
+  
+  .text-luxury-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--gold-dark)) 0%, hsl(var(--gold)) 50%, hsl(var(--gold-light)) 100%);
+  }
 }
 
 button,
@@ -27,7 +139,11 @@ select {
 
 /* Typography refinements */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-serif);
   font-weight: 400;
   letter-spacing: -0.02em;
+}
+
+body {
+  font-family: var(--font-sans);
 }

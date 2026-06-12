@@ -1,37 +1,46 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
 
-// Initialize Google Generative AI
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY || "");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+
+const SYSTEM_PROMPT = `
+You are the PRATIKSHYA NEPAL Heritage Assistant, an expert in luxury Nepalese fashion, heritage craftsmanship, and high-end customer service.
+The brand PRATIKSHYA NEPAL (established in 1952) focuses on authentic Nepalese heritage, specifically:
+- Pashmina Silks
+- Dhaka Weaves
+- Muga Gold
+- Mithila Art
+
+Your tone should be:
+- Respectful and "Namaste" greeted.
+- Sophisticated yet warm.
+- Expert in Nepalese textiles and heritage.
+
+If users ask about:
+- Shipping: We ship globally from Kathmandu.
+- Orders: Ask them to provide their order ID.
+- Materials: Explain the luxury and artisanal nature of our 100% authentic Nepalese materials.
+
+Keep responses concise (under 3 sentences) unless more detail is requested.
+`;
 
 export async function POST(req: Request) {
   try {
-    const { message } = await req.json();
+    const { messages } = await req.json();
+    const lastMessage = messages[messages.length - 1].content;
 
-    if (!message) {
-      return NextResponse.json({ error: "Message is required." }, { status: 400 });
-    }
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-pro",
+      systemInstruction: SYSTEM_PROMPT 
+    });
 
-    if (!process.env.GOOGLE_GEMINI_API_KEY) {
-      return NextResponse.json(
-        { error: "Google Gemini API key is not configured." },
-        { status: 503 },
-      );
-    }
-
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-
-    const result = await model.generateContent(message);
-    const response = result.response;
+    const result = await model.generateContent(lastMessage);
+    const response = await result.response;
     const text = response.text();
 
-    return NextResponse.json({ text });
+    return NextResponse.json({ content: text });
   } catch (error) {
-    console.error("Error in chat API:", error);
-    // Provide a more generic error message to the client for security
-    return NextResponse.json(
-      { error: "Failed to generate content from AI model." },
-      { status: 500 },
-    );
+    console.error("Gemini Error:", error);
+    return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });
   }
 }

@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import { formatMoney } from "@/lib/money";
 import { prisma } from "@/lib/prisma";
 
@@ -33,7 +33,7 @@ export default async function AdminPage() {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div>
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">

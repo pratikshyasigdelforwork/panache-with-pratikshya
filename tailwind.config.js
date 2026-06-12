@@ -11,9 +11,9 @@ module.exports = {
       },
       colors: {
         luxury: {
-          black: "#1a1a1a",
-          gold: "#c5a059",
-          white: "#fafafa",
+          black: "#000000",
+          white: "#ffffff",
+          gray: "#f4f4f4",
         },
       },
     },

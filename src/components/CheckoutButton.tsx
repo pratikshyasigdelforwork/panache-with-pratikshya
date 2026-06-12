@@ -52,12 +52,12 @@ export default function CheckoutButton() {
         type="button"
         disabled={loading || items.length === 0}
         onClick={handleCheckout}
-        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-neutral-950 px-5 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300"
+        className="inline-flex h-14 w-full items-center justify-center gap-3 bg-neutral-950 px-8 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition hover:bg-gold-dark disabled:cursor-not-allowed disabled:bg-neutral-300 dark:bg-gold dark:text-neutral-950 dark:hover:bg-gold-light dark:disabled:bg-neutral-800 dark:disabled:text-neutral-500"
       >
         <CreditCard className="h-4 w-4" />
-        {loading ? "Starting checkout" : "Checkout with Stripe"}
+        {loading ? "Initializing Atelier Checkout" : "Proceed to Secure Payment"}
       </button>
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      {error ? <p className="text-sm text-red-600 dark:text-red-400">{error}</p> : null}
     </div>
   );
 }

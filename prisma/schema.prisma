@@ -9,37 +9,108 @@ datasource db {
 }
 
 model User {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  name            String?
+  picture         String?
+  role            String   @default("customer")
+  provider        String?
+  addresses       Address[]
+  wishlist        Wishlist?
+  reviews         Review[]
+  orders          Order[]
+  marketing       Json?    @default("{\"email\":false,\"sms\":false,\"whatsapp\":false}")
+  surveyLocations Json?    @default("[]")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Address {
   id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  role      String   @default("customer")
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  street    String
+  city      String
+  country   String
+  isDefault Boolean  @default(false)
   createdAt DateTime @default(now())
-  orders    Order[]
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
-  id          String      @id @default(cuid())
-  slug        String?     @unique @default(cuid())
+  id            String   @id @default(cuid())
+  slug          String?  @unique @default(cuid())
+  name          String
+  brand         String?
+  description   String?
+  price         Float
+  priceCents    Int      @default(0)
+  compareAt     Float?
+  currency      String   @default("usd")
+  image         String
+  images        String[] @default([])
+  sizes         Float[]  @default([])
+  colors        String[] @default([])
+  category      String   @default("uncategorized")
+  subcategory   String?
+  material      String?
+  limitedEdition Boolean @default(false)
+  editionLimit  Int?
+  editionNumber Int?
+  featured      Boolean  @default(false)
+  active        Boolean  @default(true)
+  stock         Int      @default(0)
+  sku           String?  @unique @default(cuid())
+  tags          String[] @default([])
+  gender        String?
+  productType   String?
+  styleWith     String[] @default([])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  orderItems    OrderItem[]
+  productSets   ProductSetLink[]
+  reviews       Review[]
+  
+  // Relations from remaining_models (optional linkages)
+  categoryId    String?
+  categoryRef   Category? @relation(fields: [categoryId], references: [id])
+  brandId       String?
+  brandRef      Brand?    @relation(fields: [brandId], references: [id])
+  collectionId  String?
+  collectionRef Collection? @relation(fields: [collectionId], references: [id])
+  wishlists     Wishlist[]
+}
+
+model ProductSet {
+  id          String   @id @default(cuid())
   name        String
-  category    String      @default("uncategorized")
-  description String?
-  price       Float
-  priceCents  Int         @default(0)
-  currency    String      @default("usd")
+  slug        String   @unique
+  description String
   image       String
-  brand       String?
-  active      Boolean     @default(true)
-  stock       Int         @default(0)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime?   @updatedAt
-  orderItems  OrderItem[]
+  gender      String?
+  tags        String[] @default([])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  products    ProductSetLink[]
+}
+
+model ProductSetLink {
+  id        String     @id @default(cuid())
+  productId String
+  setId     String
+  order     Int
+  product   Product    @relation(fields: [productId], references: [id])
+  set       ProductSet @relation(fields: [setId], references: [id])
 }
 
 model Order {
   id                      String      @id @default(cuid())
   total                   Float
+  subtotal                Float       @default(0)
   subtotalCents           Int         @default(0)
+  shipping                Float       @default(0)
   shippingCents           Int         @default(0)
+  tax                     Float       @default(0)
   taxCents                Int         @default(0)
   totalCents              Int         @default(0)
   currency                String      @default("usd")
@@ -48,9 +119,11 @@ model Order {
   customerName            String?
   stripeCheckoutSessionId String?     @unique
   stripePaymentIntentId   String?
+  address                 Json?
   userId                  String?
   user                    User?       @relation(fields: [userId], references: [id])
   items                   OrderItem[]
+  returnRequests          ReturnRequest[]
   createdAt               DateTime    @default(now())
   updatedAt               DateTime    @updatedAt
 }
@@ -62,8 +135,90 @@ model OrderItem {
   quantity     Int
   price        Float
   priceCents   Int     @default(0)
+  size         Float?
+  color        String?
   productName  String?
   productImage String?
   order        Order   @relation(fields: [orderId], references: [id])
   product      Product @relation(fields: [productId], references: [id])
+}
+
+model ReturnRequest {
+  id            String   @id @default(cuid())
+  orderId       String
+  order         Order    @relation(fields: [orderId], references: [id])
+  email         String
+  items         Json     @default("[]")
+  reason        String
+  status        String   @default("requested")
+  images        String[] @default([])
+  refundAmount  Float?
+  refundMethod  String?
+  notes         String?
+  adminNotes    String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Brand {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Collection {
+  id        String    @id @default(cuid())
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Wishlist {
+  id        String    @id @default(cuid())
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id])
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+}
+
+model Coupon {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  discount  Decimal
+  isActive  Boolean  @default(true)
+  expiresAt DateTime
+}
+
+model Blog {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   @db.Text
+  author    String
+  createdAt DateTime @default(now())
+}
+
+model Banner {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  link      String?
+  isActive  Boolean  @default(true)
 }

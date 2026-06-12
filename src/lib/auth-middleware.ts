@@ -1,8 +1,7 @@
 import { auth } from "@/lib/auth";
 import { ApiError } from "./api-utils";
-import { Role } from "@prisma/client";
 
-export const authorize = async (requiredRole?: Role) => {
+export const authorize = async (requiredRole?: string) => {
   const session = await auth();
   
   if (!session?.user) {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import ClearCartOnMount from "@/components/ClearCartOnMount";
 import { formatMoney } from "@/lib/money";
 import { prisma } from "@/lib/prisma";
@@ -19,7 +19,7 @@ export default async function CheckoutSuccessPage({
 
   return (
     <>
-      <Navbar />
+      <Header />
       <ClearCartOnMount />
       <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="border border-neutral-200 p-8">

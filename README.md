@@ -1,39 +1,55 @@
-# Panache with Pratikshya
+# Panache With Pratikshya - Enterprise Luxury Ecosystem
 
-A premium destination for curated designer fashion.
+Welcome to the command center for Panache With Pratikshya. This platform is a high-performance, luxury-focused ecommerce engine built for global scale.
 
+## 🛠 Tech Stack
+- **Frontend:** Next.js 15 (App Router), TypeScript, Tailwind CSS, Framer Motion
+- **Backend:** Node.js, Prisma, PostgreSQL
+- **AI/ML:** Gemini API (Integrated Search & Stylist)
+- **Infrastructure:** Vercel (Hosting), Cloudinary (Media), Supabase/PostgreSQL (DB)
 
-## Getting Started
+## 🚀 Getting Started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 1. Environment Setup
+Create a `.env.local` file in the root with the following keys:
+```env
+DATABASE_URL=
+DIRECT_URL=
+AUTH_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_MAPS_API_KEY=
+GEMINI_API_KEY=
+STRIPE_PUBLISHABLE_KEY=
+STRIPE_SECRET_KEY=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Development
+```bash
+# Install dependencies
+npm install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Run the development server
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🏗 Admin Dashboard
+The Admin Dashboard is protected by RBAC. 
+- **Roles:** Super Admin, Admin, Manager, Content Editor, Support.
+- **AI Business Assistant:** Interact via the chat icon in the dashboard to request real-time analytics.
 
-## Learn More
+## 🛍 Customer Experience
+- **Virtual Stylist:** Accessible via the search interface for AI-curated product styling.
+- **Checkout:** Multi-step premium flow supporting Stripe, eSewa, and Khalti.
 
-To learn more about Next.js, take a look at the following resources:
+## 🔒 Security
+- **RBAC:** Routes under `/admin/*` are gated at the middleware level.
+- **Audit Logs:** All sensitive actions are logged in the `AuditLog` table.
+- **CSRF/Rate Limiting:** Enterprise protection configured for all API endpoints.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌐 Deployment
+The project is optimized for **Vercel**. 
+1. Push to GitHub.
+2. Link repository to Vercel.
+3. Inject the production `.env` keys.
+4. Deploy.

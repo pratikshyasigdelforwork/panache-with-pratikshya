@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import AddToCartButton from "@/components/AddToCartButton";
 import ProductCard from "@/components/ProductCard";
 import { formatMoney } from "@/lib/money";
@@ -33,10 +33,10 @@ export default async function ProductPage({
 
   return (
     <>
-      <Navbar />
+      <Header />
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2">
-          <div className="relative aspect-[4/5] overflow-hidden bg-neutral-100">
+          <div className="relative aspect-[4/5] overflow-hidden bg-neutral-100 dark:bg-neutral-900">
             <Image
               src={product.image}
               alt={product.name}
@@ -49,22 +49,22 @@ export default async function ProductPage({
           <section className="lg:pt-8">
             <Link
               href={`/shop?category=${product.category}`}
-              className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-500 hover:text-neutral-950"
+              className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-500 transition hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-50"
             >
               {product.category}
             </Link>
-            <h1 className="mt-4 text-4xl font-semibold text-neutral-950">
+            <h1 className="mt-4 text-4xl font-semibold text-neutral-950 dark:text-neutral-50">
               {product.name}
             </h1>
-            <p className="mt-4 text-2xl font-medium text-neutral-950">
+            <p className="mt-4 text-2xl font-medium text-neutral-950 dark:text-neutral-50">
               {formatMoney(product.priceCents, product.currency)}
             </p>
-            <p className="mt-6 max-w-xl leading-7 text-neutral-700">
+            <p className="mt-6 max-w-xl leading-7 text-neutral-700 dark:text-neutral-300">
               {product.description}
             </p>
-            <div className="mt-6 border-y border-neutral-200 py-5 text-sm text-neutral-600">
+            <div className="mt-6 border-y border-neutral-200 py-5 text-sm text-neutral-600 dark:border-neutral-800 dark:text-neutral-400">
               <p>{product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}</p>
-              <p className="mt-2">Secure checkout powered by Stripe.</p>
+              <p className="mt-2 text-neutral-500 dark:text-neutral-500">Secure checkout powered by Stripe.</p>
             </div>
             <div className="mt-6 max-w-sm">
               <AddToCartButton product={product} />
@@ -74,7 +74,7 @@ export default async function ProductPage({
 
         {related.length > 0 ? (
           <section className="mt-16">
-            <h2 className="text-2xl font-semibold text-neutral-950">
+            <h2 className="text-2xl font-semibold text-neutral-950 dark:text-neutral-50">
               More {product.category}
             </h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

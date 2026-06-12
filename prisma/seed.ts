@@ -19,6 +19,7 @@ function generateMockProducts(count: number) {
     description: `Exquisite designer piece number ${i + 1}.`,
     stock: 10,
     active: true,
+    sku: `SKU-${1000 + i}`,
   }));
 }
 

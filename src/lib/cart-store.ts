@@ -17,10 +17,13 @@ export type CartItem = {
 
 type CartState = {
   items: CartItem[];
+  isOpen: boolean;
   addItem: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
+  openCart: () => void;
+  closeCart: () => void;
   // Add a flag to indicate if the store has been hydrated
   _hasHydrated: boolean;
   setHasHydrated: (state: boolean) => void;
@@ -30,13 +33,16 @@ export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
+      isOpen: false,
       _hasHydrated: false,
       setHasHydrated: (state) => {
         set({
           _hasHydrated: state,
         });
       },
-      addItem: (item, quantity = 1) =>
+      openCart: () => set({ isOpen: true }),
+      closeCart: () => set({ isOpen: false }),
+      addItem: (item, quantity = 1) => {
         set(
           produce((state: CartState) => {
             const existingItemIndex = state.items.findIndex(
@@ -54,7 +60,9 @@ export const useCartStore = create<CartState>()(
               state.items.push({ ...item, quantity: Math.min(quantity, item.stock) });
             }
           }),
-        ),
+        );
+        get().openCart(); // Open drawer on add
+      },
       removeItem: (id) =>
         set(
           produce((state: CartState) => {

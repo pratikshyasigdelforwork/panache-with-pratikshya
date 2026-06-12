@@ -26,10 +26,10 @@ export default function AddToCartButton({
       type="button"
       disabled={disabled}
       onClick={() => addItem({ ...product, slug: product.slug ?? "" })}
-      className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-neutral-950 px-4 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300"
+      className="mt-6 inline-flex h-12 w-full items-center justify-center gap-3 bg-neutral-950 px-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition hover:bg-gold-dark disabled:cursor-not-allowed disabled:bg-neutral-300 dark:bg-gold dark:text-neutral-950 dark:hover:bg-gold-light dark:disabled:bg-neutral-800 dark:disabled:text-neutral-500"
     >
       <ShoppingBag className="h-4 w-4" />
-      {disabled ? "Out of stock" : "Add to cart"}
+      {disabled ? "Sold Out" : "Add to Atelier Bag"}
     </button>
   );
 }

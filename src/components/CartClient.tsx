@@ -20,15 +20,15 @@ export default function CartClient() {
   if (items.length === 0) {
     return (
       <div className="mx-auto max-w-3xl py-20 text-center">
-        <h1 className="text-3xl font-semibold text-neutral-950">
+        <h1 className="text-3xl font-semibold text-neutral-950 dark:text-neutral-50">
           Your bag is empty
         </h1>
-        <p className="mt-3 text-neutral-600">
+        <p className="mt-3 text-neutral-600 dark:text-neutral-400">
           Add jackets, shoes, watches, and bags from the shop.
         </p>
         <Link
           href="/shop"
-          className="mt-8 inline-flex h-11 items-center rounded-md bg-neutral-950 px-6 text-sm font-medium text-white transition hover:bg-neutral-800"
+          className="mt-8 inline-flex h-11 items-center rounded-md bg-neutral-950 px-6 text-sm font-medium text-white transition hover:bg-neutral-800 dark:bg-neutral-50 dark:text-neutral-950 dark:hover:bg-neutral-200"
         >
           Shop products
         </Link>
@@ -39,11 +39,11 @@ export default function CartClient() {
   return (
     <div className="grid gap-10 lg:grid-cols-[1fr_380px]">
       <section className="space-y-4">
-        <h1 className="text-3xl font-semibold text-neutral-950">Shopping bag</h1>
-        <div className="divide-y divide-neutral-200 border-y border-neutral-200">
+        <h1 className="text-3xl font-semibold text-neutral-950 dark:text-neutral-50">Shopping bag</h1>
+        <div className="divide-y divide-neutral-200 border-y border-neutral-200 dark:divide-neutral-800 dark:border-neutral-800">
           {items.map((item) => (
             <div key={item.id} className="grid grid-cols-[96px_1fr] gap-4 py-5">
-              <div className="relative aspect-square overflow-hidden rounded-md bg-neutral-100">
+              <div className="relative aspect-square overflow-hidden rounded-md bg-neutral-100 dark:bg-neutral-900">
                 <Image
                   src={item.image}
                   alt={item.name}
@@ -56,35 +56,35 @@ export default function CartClient() {
                 <div>
                   <Link
                     href={`/products/${item.slug}`}
-                    className="font-medium text-neutral-950 hover:underline"
+                    className="font-medium text-neutral-950 transition hover:underline dark:text-neutral-50"
                   >
                     {item.name}
                   </Link>
-                  <p className="mt-1 text-sm text-neutral-600">
+                  <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
                     {formatMoney(item.priceCents, item.currency)}
                   </p>
-                  <p className="mt-1 text-xs uppercase tracking-wide text-neutral-500">
+                  <p className="mt-1 text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-500">
                     {item.stock} in stock
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 items-center rounded-md border border-neutral-300">
+                  <div className="flex h-10 items-center rounded-md border border-neutral-300 dark:border-neutral-700">
                     <button
                       type="button"
                       aria-label={`Decrease ${item.name} quantity`}
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="grid h-10 w-10 place-items-center text-neutral-700 hover:text-neutral-950"
+                      className="grid h-10 w-10 place-items-center text-neutral-700 transition hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-50"
                     >
                       <Minus className="h-4 w-4" />
                     </button>
-                    <span className="w-8 text-center text-sm font-medium">
+                    <span className="w-8 text-center text-sm font-medium dark:text-neutral-50">
                       {item.quantity}
                     </span>
                     <button
                       type="button"
                       aria-label={`Increase ${item.name} quantity`}
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="grid h-10 w-10 place-items-center text-neutral-700 hover:text-neutral-950"
+                      className="grid h-10 w-10 place-items-center text-neutral-700 transition hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-50"
                     >
                       <Plus className="h-4 w-4" />
                     </button>
@@ -93,7 +93,7 @@ export default function CartClient() {
                     type="button"
                     aria-label={`Remove ${item.name}`}
                     onClick={() => removeItem(item.id)}
-                    className="grid h-10 w-10 place-items-center rounded-md border border-neutral-300 text-neutral-600 hover:text-red-600"
+                    className="grid h-10 w-10 place-items-center rounded-md border border-neutral-300 text-neutral-600 transition hover:border-red-600 hover:text-red-600 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-red-500 dark:hover:text-red-500"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -104,18 +104,18 @@ export default function CartClient() {
         </div>
       </section>
 
-      <aside className="h-fit border border-neutral-200 p-6">
-        <h2 className="text-lg font-semibold text-neutral-950">Order summary</h2>
+      <aside className="h-fit border border-neutral-200 p-6 dark:border-neutral-800">
+        <h2 className="text-lg font-semibold text-neutral-950 dark:text-neutral-50">Order summary</h2>
         <div className="mt-5 space-y-3 text-sm">
           <div className="flex justify-between">
-            <span className="text-neutral-600">Subtotal</span>
-            <span className="font-medium">
+            <span className="text-neutral-600 dark:text-neutral-400">Subtotal</span>
+            <span className="font-medium dark:text-neutral-50">
               {formatMoney(subtotalCents, items[0]?.currency)}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-neutral-600">Shipping</span>
-            <span className="font-medium">Calculated by Stripe</span>
+            <span className="text-neutral-600 dark:text-neutral-400">Shipping</span>
+            <span className="font-medium dark:text-neutral-50">Calculated by Stripe</span>
           </div>
         </div>
         <div className="mt-6">
