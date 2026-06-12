@@ -69,15 +69,14 @@
   *, *::before, *::after {
     @apply border-neutral-200 dark:border-neutral-800;
   }
-  button, a, input, select, textarea, .theme-transition {
-    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
-    transition-duration: 300ms;
-    transition-timing-function: ease-out;
-  }
   body {
     @apply bg-neutral-50 text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-50;
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+  }
+  body,
+  .theme-elem {
+    transition: background-color 300ms ease-out, color 300ms ease-out, border-color 300ms ease-out;
   }
 
   h1, h2, h3, h4, h5, h6 {
