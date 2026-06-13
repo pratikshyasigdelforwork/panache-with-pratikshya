@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import { prisma } from "@/lib/prisma";
 
-const categories = ["jackets", "shoes", "watches", "bags"];
+const categories = ["jackets", "shoes", "watches", "bags", "pashmina", "dhaka", "muga", "mithila", "heritage", "limited"];
 
 export default async function ShopPage({
   searchParams,

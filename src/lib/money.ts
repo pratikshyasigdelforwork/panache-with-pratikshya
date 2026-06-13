@@ -1,4 +1,5 @@
 export function formatMoney(cents: number, currency = "usd") {
+  if (!Number.isFinite(cents) || cents < 0) cents = 0;
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: currency.toUpperCase(),
