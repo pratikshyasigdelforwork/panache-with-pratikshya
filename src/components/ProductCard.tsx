@@ -75,7 +75,8 @@ export default function ProductCard({
                 priceCents: product.priceCents,
                 currency: product.currency,
                 image: product.image,
-                quantity: 1,
+                stock: product.stock,
+                slug: product.slug || "",
               });
             }}
             className="absolute bottom-0 left-0 right-0 z-10 flex h-12 items-center justify-center gap-2 bg-black/80 text-[9px] font-bold uppercase tracking-[0.2em] text-white opacity-0 transition-all duration-500 translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-gold-dark"

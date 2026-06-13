@@ -45,6 +45,7 @@ export const useCartStore = create<CartState>()(
       addItem: (item, quantity = 1) => {
         set(
           produce((state: CartState) => {
+            const maxStock = item.stock ?? 99;
             const existingItemIndex = state.items.findIndex(
               (i) => i.id === item.id,
             );
@@ -54,10 +55,10 @@ export const useCartStore = create<CartState>()(
               const newQuantity = existingItem.quantity + quantity;
               state.items[existingItemIndex].quantity = Math.min(
                 newQuantity,
-                item.stock,
+                maxStock,
               );
             } else {
-              state.items.push({ ...item, quantity: Math.min(quantity, item.stock) });
+              state.items.push({ ...item, quantity: Math.min(quantity, maxStock) });
             }
           }),
         );
@@ -74,11 +75,9 @@ export const useCartStore = create<CartState>()(
           produce((state: CartState) => {
             const itemIndex = state.items.findIndex((item) => item.id === id);
             if (itemIndex > -1) {
-              const product = get().items[itemIndex]; // Get current product to check stock
-              state.items[itemIndex].quantity = Math.max(
-                1,
-                Math.min(quantity, product.stock),
-              );
+              const product = get().items[itemIndex];
+              const clamped = Math.max(1, Math.min(quantity, product.stock ?? 99));
+              state.items[itemIndex].quantity = Number.isFinite(clamped) ? clamped : 1;
             }
           }),
         ),
