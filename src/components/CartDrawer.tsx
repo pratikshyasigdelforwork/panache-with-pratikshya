@@ -12,7 +12,10 @@ import { useEffect } from "react";
 export default function CartDrawer() {
   const { items, isOpen, closeCart, updateQuantity, removeItem } = useCartStore();
 
-  const subtotalCents = items.reduce(
+  const sanitizedItems = items.filter(
+    (i) => Number.isFinite(i.priceCents) && Number.isFinite(i.quantity) && i.priceCents > 0 && i.quantity > 0
+  );
+  const subtotalCents = sanitizedItems.reduce(
     (total, item) => total + item.priceCents * item.quantity,
     0
   );
@@ -60,8 +63,8 @@ export default function CartDrawer() {
 
           {/* Items */}
           <div className="flex-1 overflow-y-auto p-6 space-y-8">
-            {items.length > 0 ? (
-              items.map((item) => (
+            {sanitizedItems.length > 0 ? (
+              sanitizedItems.map((item) => (
                 <div key={item.id} className="grid grid-cols-[80px_1fr] gap-6">
                   <div className="relative aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-900">
                     <Image
@@ -121,11 +124,11 @@ export default function CartDrawer() {
           </div>
 
           {/* Footer */}
-          {items.length > 0 && (
+          {sanitizedItems.length > 0 && (
             <div className="border-t border-neutral-200 p-6 dark:border-neutral-800 space-y-6 bg-neutral-50 dark:bg-neutral-900/50">
               <div className="flex justify-between">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">Estimated Total</span>
-                <span className="text-sm font-bold">{formatMoney(subtotalCents, items[0].currency)}</span>
+                <span className="text-sm font-bold">{formatMoney(subtotalCents, sanitizedItems[0].currency)}</span>
               </div>
               <p className="text-[9px] leading-relaxed text-neutral-400 tracking-wider">
                 Shipping and taxes are calculated at the next step of the atelier checkout process.

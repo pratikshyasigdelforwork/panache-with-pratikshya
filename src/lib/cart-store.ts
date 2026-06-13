@@ -84,10 +84,22 @@ export const useCartStore = create<CartState>()(
       clearCart: () => set({ items: [] }),
     }),
     {
-      name: "cart-storage", // name of the item in localStorage
+      name: "cart-storage",
       storage: createJSONStorage(() => localStorage),
       onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true);
+        if (state) {
+          const sanitized = state.items.filter(
+            (item) =>
+              Number.isFinite(item.quantity) &&
+              Number.isFinite(item.priceCents) &&
+              item.quantity > 0 &&
+              item.priceCents > 0,
+          );
+          if (sanitized.length !== state.items.length) {
+            state.items = sanitized;
+          }
+          state.setHasHydrated(true);
+        }
       },
     },
   ),

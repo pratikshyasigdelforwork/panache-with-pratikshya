@@ -18,10 +18,17 @@ export default function CheckoutButton() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: items.map((item) => ({
-            productId: item.id,
-            quantity: item.quantity,
-          })),
+          items: items
+            .filter(
+              (item) =>
+                Number.isFinite(item.quantity) &&
+                Number.isFinite(item.priceCents) &&
+                item.quantity > 0,
+            )
+            .map((item) => ({
+              productId: item.id,
+              quantity: Math.max(1, item.quantity),
+            })),
         }),
       });
 
