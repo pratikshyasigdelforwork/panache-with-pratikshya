@@ -59,12 +59,12 @@ export default function ProductCard({
               e.preventDefault();
               e.stopPropagation();
             }}
-            className="absolute right-3 top-3 z-10 grid h-8 w-8 place-items-center rounded-full bg-white/80 opacity-0 transition-all duration-300 hover:bg-white group-hover:opacity-100"
+            className="absolute right-2 top-2 z-10 grid h-9 w-9 place-items-center rounded-full bg-white/90 opacity-0 transition-all duration-300 hover:bg-white md:group-hover:opacity-100 shadow-sm"
             aria-label="Add to wishlist"
           >
             <Heart className="h-4 w-4 text-neutral-700" />
           </button>
-          {/* Quick add button */}
+          {/* Quick add button - always visible on mobile */}
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -79,10 +79,11 @@ export default function ProductCard({
                 slug: product.slug || "",
               });
             }}
-            className="absolute bottom-0 left-0 right-0 z-10 flex h-12 items-center justify-center gap-2 bg-black/80 text-[9px] font-bold uppercase tracking-[0.2em] text-white opacity-0 transition-all duration-500 translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-gold-dark"
+            className="absolute bottom-0 left-0 right-0 z-10 flex h-12 items-center justify-center gap-2 bg-black/80 text-[9px] font-bold uppercase tracking-[0.2em] text-white transition-all duration-500 md:opacity-0 md:translate-y-4 md:group-hover:translate-y-0 md:group-hover:opacity-100 hover:bg-gold-dark"
           >
             <ShoppingBag className="h-3.5 w-3.5" />
-            Add to Bag
+            <span className="hidden md:inline">Add to Bag</span>
+            <span className="md:hidden">Add to Bag</span>
           </button>
         </div>
       </Link>

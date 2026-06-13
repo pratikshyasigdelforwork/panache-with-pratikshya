@@ -37,40 +37,45 @@ export default async function ShopPage({
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6 border-b border-neutral-200 pb-8 dark:border-neutral-800 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
-              Catalog
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-dark dark:text-gold-light">
+              {category || "All"} Collection
             </p>
-            <h1 className="mt-2 text-4xl font-semibold text-neutral-950 dark:text-neutral-50">
-              Shop products
+            <h1 className="mt-2 text-4xl font-serif font-bold uppercase tracking-tight text-neutral-950 dark:text-neutral-50">
+              {category || "The Atelier"}
             </h1>
+            <p className="mt-1 text-[10px] tracking-wider text-neutral-500">
+              {products.length} {products.length === 1 ? "product" : "products"}
+            </p>
           </div>
-          <form className="flex w-full max-w-md gap-2" action="/shop">
-            {category ? (
-              <input type="hidden" name="category" value={category} />
-            ) : null}
-            <input
-              name="q"
-              defaultValue={query}
-              placeholder="Search catalog"
-              aria-label="Search products"
-              className="h-11 min-w-0 flex-1 rounded-md border border-neutral-300 bg-white px-3 text-sm outline-none focus:border-neutral-950 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-50 dark:focus:border-neutral-50"
-            />
-            <button
-              type="submit"
-              className="h-11 rounded-md bg-neutral-950 px-5 text-sm font-medium text-white transition hover:bg-neutral-800 dark:bg-neutral-50 dark:text-neutral-950 dark:hover:bg-neutral-200"
-            >
-              Search
-            </button>
-          </form>
+          <div className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
+            <form className="flex flex-1 gap-2" action="/shop">
+              {category ? (
+                <input type="hidden" name="category" value={category} />
+              ) : null}
+              <input
+                name="q"
+                defaultValue={query}
+                placeholder="Search collection"
+                aria-label="Search products"
+                className="h-11 min-w-0 flex-1 border border-neutral-300 bg-transparent px-4 text-[10px] uppercase tracking-widest outline-none transition-colors focus:border-gold-dark dark:border-neutral-700 dark:text-neutral-50 dark:focus:border-gold-light"
+              />
+              <button
+                type="submit"
+                className="h-11 bg-neutral-950 px-5 text-[10px] font-bold uppercase tracking-widest text-white transition hover:bg-gold-dark dark:bg-neutral-50 dark:text-neutral-950 dark:hover:bg-gold"
+              >
+                Search
+              </button>
+            </form>
+          </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-2">
+        <div className="mt-8 flex flex-wrap gap-1.5">
           <Link
             href="/shop"
-            className={`rounded-full border px-4 py-2 text-sm transition ${
+            className={`px-4 py-2 text-[9px] font-bold uppercase tracking-[0.2em] transition-all duration-200 ${
               !category
-                ? "border-neutral-950 bg-neutral-950 text-white dark:border-neutral-50 dark:bg-neutral-50 dark:text-neutral-950"
-                : "border-neutral-300 text-neutral-700 hover:border-neutral-950 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-50"
+                ? "bg-neutral-950 text-white dark:bg-neutral-50 dark:text-neutral-950"
+                : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800"
             }`}
           >
             All
@@ -79,10 +84,10 @@ export default async function ShopPage({
             <Link
               key={item}
               href={`/shop?category=${item}`}
-              className={`rounded-full border px-4 py-2 text-sm capitalize transition ${
+              className={`px-4 py-2 text-[9px] font-bold uppercase tracking-[0.2em] transition-all duration-200 ${
                 category === item
-                  ? "border-neutral-950 bg-neutral-950 text-white dark:border-neutral-50 dark:bg-neutral-50 dark:text-neutral-950"
-                  : "border-neutral-300 text-neutral-700 hover:border-neutral-950 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-50"
+                  ? "bg-neutral-950 text-white dark:bg-neutral-50 dark:text-neutral-950"
+                  : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800"
               }`}
             >
               {item}

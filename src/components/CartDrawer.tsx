@@ -125,13 +125,34 @@ export default function CartDrawer() {
 
           {/* Footer */}
           {sanitizedItems.length > 0 && (
-            <div className="border-t border-neutral-200 p-6 dark:border-neutral-800 space-y-6 bg-neutral-50 dark:bg-neutral-900/50">
+            <div className="border-t border-neutral-200 p-6 dark:border-neutral-800 space-y-5 bg-neutral-50 dark:bg-neutral-900/50">
+              {/* Free shipping progress */}
+              {(() => {
+                const FREE_THRESHOLD = 20000; // $200 in cents
+                const progress = Math.min(100, (subtotalCents / FREE_THRESHOLD) * 100);
+                return (
+                  <div>
+                    <div className="flex h-1 w-full overflow-hidden bg-neutral-200 dark:bg-neutral-800">
+                      <div
+                        className="bg-gold-dark transition-all duration-500 dark:bg-gold-light"
+                        style={{ width: `${Math.min(100, progress)}%` }}
+                      />
+                    </div>
+                    <p className="mt-2 text-[9px] tracking-wider text-neutral-500">
+                      {progress >= 100
+                        ? "You qualify for complimentary shipping"
+                        : `Add ${formatMoney(FREE_THRESHOLD - subtotalCents, sanitizedItems[0].currency)} more for free shipping`}
+                    </p>
+                  </div>
+                );
+              })()}
+
               <div className="flex justify-between">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">Estimated Total</span>
                 <span className="text-sm font-bold">{formatMoney(subtotalCents, sanitizedItems[0].currency)}</span>
               </div>
               <p className="text-[9px] leading-relaxed text-neutral-400 tracking-wider">
-                Shipping and taxes are calculated at the next step of the atelier checkout process.
+                Duties & taxes calculated at checkout. Secure payment via Stripe.
               </p>
               <div onClick={closeCart}>
                 <CheckoutButton />
